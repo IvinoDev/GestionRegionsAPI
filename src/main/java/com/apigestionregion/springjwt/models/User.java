@@ -1,5 +1,9 @@
 package com.apigestionregion.springjwt.models;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -9,6 +13,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 @Entity
+@Data
+@AllArgsConstructor
 @Table(name = "users", 
     uniqueConstraints = { 
       @UniqueConstraint(columnNames = "username"),
@@ -28,8 +34,6 @@ public class User {
   @Email
   private String email;
 
-  @NotBlank
-  @Size(max = 120)
   private String password;
 
   @ManyToMany(fetch = FetchType.LAZY)
@@ -37,6 +41,9 @@ public class User {
         joinColumns = @JoinColumn(name = "user_id"), 
         inverseJoinColumns = @JoinColumn(name = "role_id"))
   private Set<Role> roles = new HashSet<>();
+
+  @OneToOne
+  private Image image;
 
   public User() {
   }

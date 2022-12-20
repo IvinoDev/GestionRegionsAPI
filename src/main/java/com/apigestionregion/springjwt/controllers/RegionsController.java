@@ -1,11 +1,16 @@
 package com.apigestionregion.springjwt.controllers;
 
+import com.apigestionregion.springjwt.models.Image;
 import com.apigestionregion.springjwt.models.Regions;
 import com.apigestionregion.springjwt.security.services.RegionsService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @CrossOrigin(origins = "http://localhost:8081", maxAge = 3600, allowCredentials="true")
 @RestController
@@ -23,12 +28,17 @@ public class RegionsController {
 
 
     /*Permet creer une entrée pour */
-    @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping("/create")
-    public String creer(@RequestBody Regions regions) {
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PostMapping(value = {"/create"}, consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    public String creer(@RequestPart("regions") Regions regions, @RequestPart("image") MultipartFile img) {
+        try {
+           Image image =  uploadImage(img);
+           regions.setImage(image);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         regionsService.creer(regions);
-
-        return "La population a été ajouté avec succcès";
+        return "La region a été ajouté avec succcès";
     }
 
 
@@ -120,6 +130,14 @@ public class RegionsController {
     @DeleteMapping("/delete/{idRegions}")
     public String supprimer(@PathVariable Long idRegions) {
         return regionsService.supprimer(idRegions);
+    }
+
+
+
+
+    public Image uploadImage(MultipartFile file) throws IOException {
+        Image image = new Image(file.getOriginalFilename(), file.getContentType(), file.getBytes());
+        return image;
     }
 
 }

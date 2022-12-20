@@ -17,9 +17,13 @@ public class Regions {
     private String langue;
     private String superficie_regions;
     private String domaine_activite;
+    private String src;
 
     @ManyToOne
     private Pays pays;
+
+    @OneToOne
+    private Image image;
 
    /* @ManyToOne
     @JoinColumn(name = "population_id_population")
