@@ -34,14 +34,15 @@ public class SpringBootSecurityJwtApplication implements CommandLineRunner {
 	@Autowired
 	UserDetailsServiceImpl userDetailsService;
 
-//	private PasswordEncoder passwordEncoder;
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	@Override
 	public void run(String... args) throws Exception {
 
 		Optional<User> newProfilAdmin = userRepository.findByUsername("MKDev");
 		Optional<User> newProfilUser = userRepository.findByUsername("BabaBallo");
-		if(newProfilAdmin == null && newProfilUser == null) {
+//		if(newProfilAdmin == null && newProfilUser == null) {
 			Role roleUser = new Role();
 			roleUser.setName(ERole.ROLE_USER);
 			roleRepository.save(roleUser);
@@ -53,22 +54,22 @@ public class SpringBootSecurityJwtApplication implements CommandLineRunner {
 			User user1 = new User();
 			user1.setUsername("Mkdev");
 			user1.setEmail("mk@orange.ml");
-			user1.setPassword("mk123");
-//			user1.setPassword(passwordEncoder.encode("mk123"));
+			//user1.setPassword("mk123");
+			user1.setPassword(passwordEncoder.encode("mk123"));
 			userRepository.save(user1);
 
 			User user2 = new User();
 			user2.setUsername("BabaBallo");
 			user2.setEmail("ballo@orange.ml");
-			user2.setPassword("bl123");
-//			user2.setPassword(passwordEncoder.encode("bl123"));
+			//user2.setPassword("bl123");
+			user2.setPassword(passwordEncoder.encode("bl123"));
 			userRepository.save(user2);
 
 			userDetailsService.addRoleToUser(roleUser.getName(), "Mkdev");
 			userDetailsService.addRoleToUser(ERole.ROLE_ADMIN, "BabaBallo");
 
 
-		}
+		//}
 		System.out.println("App successfully launched with our default users");
 	}
 }
