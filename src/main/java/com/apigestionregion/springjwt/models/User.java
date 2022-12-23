@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -44,6 +46,9 @@ public class User {
 
   @OneToOne
   private Image image;
+
+  @OneToMany(mappedBy = "user")
+  private Collection<Commentaire> commentaire = new ArrayList<>();
 
   public User() {
   }

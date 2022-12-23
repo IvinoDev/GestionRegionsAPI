@@ -40,9 +40,9 @@ public class SpringBootSecurityJwtApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 
-		Optional<User> newProfilAdmin = userRepository.findByUsername("MKDev");
-		Optional<User> newProfilUser = userRepository.findByUsername("BabaBallo");
-//		if(newProfilAdmin == null && newProfilUser == null) {
+		User newProfilAdmin = userRepository.findByUsername("MKDev");
+		User newProfilUser = userRepository.findByUsername("BabaBallo");
+		if(newProfilAdmin == null && newProfilUser == null) {
 			Role roleUser = new Role();
 			roleUser.setName(ERole.ROLE_USER);
 			roleRepository.save(roleUser);
@@ -69,7 +69,7 @@ public class SpringBootSecurityJwtApplication implements CommandLineRunner {
 			userDetailsService.addRoleToUser(ERole.ROLE_ADMIN, "BabaBallo");
 
 
-		//}
+		}
 		System.out.println("App successfully launched with our default users");
 	}
 }

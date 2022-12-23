@@ -20,7 +20,7 @@ public class PaysController {
     /* Permet de creer une entrée pour*/
     @Autowired
     private final PaysService paysService;
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/create")
     public Pays creer(@RequestBody Pays pays) {
         return paysService.creer(pays);
@@ -34,7 +34,7 @@ public class PaysController {
 
 
     /*Permet d'afficher la liste de toute les  pays*/
-    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @GetMapping("/read")
     public List<Pays> lire() {
         return paysService.lire();

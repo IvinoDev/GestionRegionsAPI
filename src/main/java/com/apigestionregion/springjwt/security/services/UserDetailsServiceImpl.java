@@ -26,17 +26,16 @@ public class UserDetailsServiceImpl implements UserDetailsService {
   @Override
   @Transactional
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    User user = userRepository.findByUsername(username)
-        .orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
-
+    User user = userRepository.findByUsername(username);
+//        .orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
     return UserDetailsImpl.build(user);
   }
 
   public void addRoleToUser(ERole eRole, String username) {
-    Optional<User> user = userRepository.findByUsername(username);
+    User user = userRepository.findByUsername(username);
     Optional<Role> eRole1 = roleRepository.findByName(eRole);
-    user.get().getRoles().add(eRole1.get());
-    userRepository.save(user.get());
+    user.getRoles().add(eRole1.get());
+    userRepository.save(user);
   }
 
 

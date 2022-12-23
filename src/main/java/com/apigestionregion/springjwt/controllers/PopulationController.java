@@ -17,7 +17,7 @@ public class PopulationController {
 
 
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     /*LA CREATION D'UNE ENTREE POUR LA POPULATION C'EST A DIRE SON CONTENU*/
     @PostMapping("/create")
     public Population creer(@RequestBody Population population) {
@@ -28,7 +28,7 @@ public class PopulationController {
 
 
 
-    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     /*LA RECUPERATION DE LA POPULATION SOUS FORME DE LISTE*/
     @GetMapping("/read")
     public Iterable<Object[]> lire() {
@@ -38,7 +38,7 @@ public class PopulationController {
 
 
 
-    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     /*Permet d'obtenir une liste du nombre d'habitant et l'année ce la population en fonction de la region entrer*/
     @GetMapping("/read1/{regions}")
     public Iterable<Object[]> lireFIND_EN_FONCTION_REGIONENTRER_ALL_NONMBRE_HABITANT_AND_ANNEE(@PathVariable String regions) {
@@ -49,7 +49,7 @@ public class PopulationController {
 
 
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
    // lA MISE A JOUR DE LA POPULATION
     @PutMapping("/update/{idPopulation}")
     public Population update(@PathVariable Long idPopulation, @RequestBody Population population) {
@@ -59,7 +59,7 @@ public class PopulationController {
 
 
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     /*Permet de modifier la population*/
     @DeleteMapping("/delete/{id}")
     public String supprimer(@PathVariable Long id) {

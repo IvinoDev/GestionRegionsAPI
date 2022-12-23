@@ -1,8 +1,11 @@
 package com.apigestionregion.springjwt.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Collection;
 
 @Entity/*Permet de montrer que notre classe qui va suivre est un entité ainsi elle sera créer dans la base de donnée*/
 @Table(name = "Regions")/*Permet de donner un nom a notre table*/
@@ -22,8 +25,14 @@ public class Regions {
     @ManyToOne
     private Pays pays;
 
-    @OneToOne
+
+    @ManyToOne(cascade=CascadeType.ALL)
     private Image image;
+
+//    @JsonIgnore
+    @OneToMany
+    private Collection<Commentaire> commentaire = new ArrayList<>();
+
 
    /* @ManyToOne
     @JoinColumn(name = "population_id_population")
